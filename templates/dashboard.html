@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Detection Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1e1e2f, #2b5876, #4e4376);
+            color: white;
+            min-height: 100vh;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .video-container {
+            max-width: 100%;
+            border-radius: 1rem;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .btn-custom {
+            font-size: 1.2rem;
+            border-radius: 30px;
+            padding: 10px 25px;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center">
+
+    <div class="container text-center">
+        <div class="card p-4 shadow-lg">
+            <h1 class="fw-bold mb-3">🎨 Multiple Color Detection</h1>
+            <p class="lead">Detect Red, Green, and Blue colors in real-time from your webcam.</p>
+
+            <div class="d-flex justify-content-center gap-3 mb-3">
+                <button class="btn btn-success btn-custom" onclick="startCamera()">▶ Start</button>
+                <button class="btn btn-danger btn-custom" onclick="stopCamera()">⏹ Stop</button>
+            </div>
+
+            <div class="video-container">
+                <img id="videoFeed" src="" class="img-fluid shadow">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startCamera() {
+            fetch('/start_camera')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("videoFeed").src = "/video_feed";
+                });
+        }
+
+        function stopCamera() {
+            fetch('/stop_camera')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("videoFeed").src = "";
+                });
+        }
+    </script>
+
+</body>
+</html>
